@@ -9,10 +9,9 @@ import {
   REFRESH_TOKEN_EXPIRES,
 } from "./constants";
 import { handleError } from "../lib/errorHelper";
+import { FastifyReply, FastifyRequest } from "fastify";
 
 const generateHash = (pwd: string) => {
-  // ROUND의 숫자가 커질수록 암호화가 복잡
-  // 복잡할 수록 성능이 떨어짐
   const hashPwd = bcrypt.hashSync(pwd, ROUND);
   return hashPwd;
 };
@@ -24,6 +23,7 @@ const duplicateVerifyUser = async (email: string) => {
         email: email,
       },
     });
+
     if (userCount > 0) throw ERROR_MESSAGE.alreadySignup;
 
     return true;
@@ -42,7 +42,9 @@ const verifyPassword = async (email: string, pwd: string) => {
         password: true,
       },
     });
+
     if (!encrptedPwd) return false;
+
     const result = bcrypt.compareSync(pwd, encrptedPwd.password);
     return result;
   } catch (error) {
@@ -66,7 +68,6 @@ const generateRefreshToken = (user: { id: number; email: string }) => {
   return refreshToken;
 };
 
-//db,jwt.verify토큰 상태 확인
 const verifyRefreshToken = async (refresh_token: string) => {
   try {
     const decoded = jwt.verify(refresh_token, SECRET_KEY) as JwtPayload;
@@ -76,7 +77,7 @@ const verifyRefreshToken = async (refresh_token: string) => {
         refreshToken: refresh_token,
       },
     });
-    // 토근에 로그인 정보가 있는지 확인
+
     if (tokenFromServer > 0) {
       return decoded;
     } else {
@@ -87,7 +88,6 @@ const verifyRefreshToken = async (refresh_token: string) => {
   }
 };
 
-//db X, jwt.verify만으로 토큰 상태 확인
 const shortVerifyRefreshToken = (refresh_token: string) => {
   const decode = jwt.verify(refresh_token, SECRET_KEY);
   if (decode) {
@@ -97,7 +97,6 @@ const shortVerifyRefreshToken = (refresh_token: string) => {
   }
 };
 
-//access_token 복호화
 const verifyAccessToken = (access_token: string) => {
   try {
     const decode = jwt.verify(access_token, SECRET_KEY) as JwtPayload;
@@ -106,6 +105,18 @@ const verifyAccessToken = (access_token: string) => {
     throw ERROR_MESSAGE.invalidToken;
   }
 };
+
+const verifySignIn = async (req: FastifyRequest, rep: FastifyReply) => {
+  const userId = req.user?.id;
+  const email = req.user?.email;
+
+  if (userId && email) {
+    return; // 토큰에도 이상이 없으면 true 리턴
+  } else {
+    handleError(rep, ERROR_MESSAGE.unauthorized);
+  }
+};
+
 export {
   generateHash,
   duplicateVerifyUser,
@@ -115,4 +126,5 @@ export {
   verifyRefreshToken,
   shortVerifyRefreshToken,
   verifyAccessToken,
+  verifySignIn,
 };
