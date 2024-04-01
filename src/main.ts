@@ -3,7 +3,7 @@ import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import type { FastifyCookieOptions } from "@fastify/cookie";
 import fastifyCookie from "@fastify/cookie";
 import routes from "./routes";
-import { SECRET_KEY } from "./lib/constants";
+import { SECRET_KEY } from "./schema/constants";
 import { currentlyAuthPlugin } from "./plugin/authPlugin";
 import { checkStartupUser, checkStartupArticle } from "./startup";
 const fastify = Fastify({

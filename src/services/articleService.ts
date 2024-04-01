@@ -1,7 +1,7 @@
 import db from "../lib/db";
 import { TArticle, TCommonPagenation } from "../schema/types";
 import { getCurrentDate } from "../lib/timeHelper";
-import { ERROR_MESSAGE, CATEGORY_TYPE } from "../lib/constants";
+import { ERROR_MESSAGE, CATEGORY_TYPE } from "../schema/constants";
 import { verifyArticleUser, likeCompareArticles } from "../lib/articleHelper";
 
 function articleService() {

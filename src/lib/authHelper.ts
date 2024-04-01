@@ -7,7 +7,7 @@ import {
   SECRET_KEY,
   ACCESS_TOKEN_EXPIRES,
   REFRESH_TOKEN_EXPIRES,
-} from "./constants";
+} from "../schema/constants";
 import { handleError } from "../lib/errorHelper";
 import { FastifyReply, FastifyRequest } from "fastify";
 
