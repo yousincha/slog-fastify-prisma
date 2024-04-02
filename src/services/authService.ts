@@ -7,7 +7,7 @@ import {
   generateRefreshToken,
   verifyRefreshToken,
 } from "../lib/authHelper";
-import { ERROR_MESSAGE } from "../schema/constants";
+import { ERROR_MESSAGE } from "../lib/constants";
 
 function authService() {
   const register = async (email: string, pwd: string) => {

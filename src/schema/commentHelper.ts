@@ -2,7 +2,7 @@ import db from "../lib/db";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { TCommentDeleteBody } from "../schema/types";
 import { handleError } from "../lib/errorHelper";
-import { ERROR_MESSAGE } from "./constants";
+import { ERROR_MESSAGE } from "../lib/constants";
 
 const compareCommentUser = async (commentId: number, userId: number) => {
   let result = false;

@@ -13,7 +13,7 @@ import {
   TCommonQuery,
 } from "../../schema/types";
 import { handleError } from "../../lib/errorHelper";
-import { ERROR_MESSAGE, CATEGORY_TYPE } from "../../schema/constants";
+import { ERROR_MESSAGE, CATEGORY_TYPE } from "../../lib/constants";
 import articleService from "../../services/articleService";
 import { verifySignIn } from "../../lib/authHelper";
 

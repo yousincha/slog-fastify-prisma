@@ -10,7 +10,7 @@ import {
 // 스키마 타입을 가져옵니다.
 import { TAuthBody } from "../../schema/types";
 import authService from "../../services/authService";
-import { ERROR_MESSAGE, SUCCESS_MESSAGE } from "../../schema/constants";
+import { ERROR_MESSAGE, SUCCESS_MESSAGE } from "../../lib/constants";
 import { handleError } from "../../lib/errorHelper";
 
 const authRoute = async (fastify: FastifyInstance) => {
