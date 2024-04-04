@@ -1,0 +1,45 @@
+import commentService from "../services/commentService";
+import { handleError } from "../lib/errorHelper";
+import { ERROR_MESSAGE } from "../lib/constants";
+function commentController() {
+    const createComment = async (req, rep) => {
+        const { articleId, content } = req.body;
+        const userId = req.user.id;
+        const userEmail = req.user.email;
+        try {
+            const result = await commentService.createComment(articleId, content, userId, userEmail);
+            rep.status(200).send(result);
+        }
+        catch (error) {
+            handleError(rep, ERROR_MESSAGE.badRequest, error);
+        }
+    };
+    const readComment = async (req, rep) => {
+        const { articleId } = req.params;
+        try {
+            const result = await commentService.readComment(articleId);
+            rep.status(200).send(result);
+        }
+        catch (error) {
+            handleError(rep, ERROR_MESSAGE.badRequest, error);
+        }
+    };
+    const deleteComment = async (req, rep) => {
+        const { articleId, commentId } = req.body;
+        const userId = req.user.id;
+        try {
+            const result = await commentService.deleteComment(articleId, commentId, userId);
+            rep.status(200).send(result);
+        }
+        catch (error) {
+            handleError(rep, ERROR_MESSAGE.badRequest, error);
+        }
+    };
+    return {
+        createComment,
+        readComment,
+        deleteComment,
+    };
+}
+export default commentController();
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY29tbWVudENvbnRyb2xsZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvY29udHJvbGxlci9jb21tZW50Q29udHJvbGxlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFPQSxPQUFPLGNBQWMsTUFBTSw0QkFBNEIsQ0FBQztBQUN4RCxPQUFPLEVBQUUsV0FBVyxFQUFFLE1BQU0sb0JBQW9CLENBQUM7QUFDakQsT0FBTyxFQUFFLGFBQWEsRUFBRSxNQUFNLGtCQUFrQixDQUFDO0FBRWpELFNBQVMsaUJBQWlCO0lBQ3hCLE1BQU0sYUFBYSxHQUFHLEtBQUssRUFDekIsR0FBbUUsRUFDbkUsR0FBaUIsRUFDakIsRUFBRTtRQUNGLE1BQU0sRUFBRSxTQUFTLEVBQUUsT0FBTyxFQUFFLEdBQUcsR0FBRyxDQUFDLElBQUksQ0FBQztRQUN4QyxNQUFNLE1BQU0sR0FBRyxHQUFHLENBQUMsSUFBSyxDQUFDLEVBQUUsQ0FBQztRQUM1QixNQUFNLFNBQVMsR0FBRyxHQUFHLENBQUMsSUFBSyxDQUFDLEtBQUssQ0FBQztRQUVsQyxJQUFJLENBQUM7WUFDSCxNQUFNLE1BQU0sR0FBRyxNQUFNLGNBQWMsQ0FBQyxhQUFhLENBQy9DLFNBQVMsRUFDVCxPQUFPLEVBQ1AsTUFBTSxFQUNOLFNBQVMsQ0FDVixDQUFDO1lBQ0YsR0FBRyxDQUFDLE1BQU0sQ0FBQyxHQUFHLENBQUMsQ0FBQyxJQUFJLENBQUMsTUFBTSxDQUFDLENBQUM7UUFDL0IsQ0FBQztRQUFDLE9BQU8sS0FBSyxFQUFFLENBQUM7WUFDZixXQUFXLENBQUMsR0FBRyxFQUFFLGFBQWEsQ0FBQyxVQUFVLEVBQUUsS0FBSyxDQUFDLENBQUM7UUFDcEQsQ0FBQztJQUNILENBQUMsQ0FBQztJQUVGLE1BQU0sV0FBVyxHQUFHLEtBQUssRUFDdkIsR0FBc0UsRUFDdEUsR0FBaUIsRUFDakIsRUFBRTtRQUNGLE1BQU0sRUFBRSxTQUFTLEVBQUUsR0FBRyxHQUFHLENBQUMsTUFBTSxDQUFDO1FBRWpDLElBQUksQ0FBQztZQUNILE1BQU0sTUFBTSxHQUFHLE1BQU0sY0FBYyxDQUFDLFdBQVcsQ0FBQyxTQUFTLENBQUMsQ0FBQztZQUMzRCxHQUFHLENBQUMsTUFBTSxDQUFDLEdBQUcsQ0FBQyxDQUFDLElBQUksQ0FBQyxNQUFNLENBQUMsQ0FBQztRQUMvQixDQUFDO1FBQUMsT0FBTyxLQUFLLEVBQUUsQ0FBQztZQUNmLFdBQVcsQ0FBQyxHQUFHLEVBQUUsYUFBYSxDQUFDLFVBQVUsRUFBRSxLQUFLLENBQUMsQ0FBQztRQUNwRCxDQUFDO0lBQ0gsQ0FBQyxDQUFDO0lBRUYsTUFBTSxhQUFhLEdBQUcsS0FBSyxFQUN6QixHQUdFLEVBQ0YsR0FBaUIsRUFDakIsRUFBRTtRQUNGLE1BQU0sRUFBRSxTQUFTLEVBQUUsU0FBUyxFQUFFLEdBQUcsR0FBRyxDQUFDLElBQUksQ0FBQztRQUMxQyxNQUFNLE1BQU0sR0FBRyxHQUFHLENBQUMsSUFBSyxDQUFDLEVBQUUsQ0FBQztRQUU1QixJQUFJLENBQUM7WUFDSCxNQUFNLE1BQU0sR0FBRyxNQUFNLGNBQWMsQ0FBQyxhQUFhLENBQy9DLFNBQVMsRUFDVCxTQUFTLEVBQ1QsTUFBTSxDQUNQLENBQUM7WUFDRixHQUFHLENBQUMsTUFBTSxDQUFDLEdBQUcsQ0FBQyxDQUFDLElBQUksQ0FBQyxNQUFNLENBQUMsQ0FBQztRQUMvQixDQUFDO1FBQUMsT0FBTyxLQUFLLEVBQUUsQ0FBQztZQUNmLFdBQVcsQ0FBQyxHQUFHLEVBQUUsYUFBYSxDQUFDLFVBQVUsRUFBRSxLQUFLLENBQUMsQ0FBQztRQUNwRCxDQUFDO0lBQ0gsQ0FBQyxDQUFDO0lBQ0YsT0FBTztRQUNMLGFBQWE7UUFDYixXQUFXO1FBQ1gsYUFBYTtLQUNkLENBQUM7QUFDSixDQUFDO0FBRUQsZUFBZSxpQkFBaUIsRUFBRSxDQUFDIn0=
